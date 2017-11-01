@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Avoid that library set to release mode regardless of parent project mode
+    publishNonDefault true
+}
+
+ext {
+    supportLibraryVersion = '25.3.1'
+    okHttpVersion = '3.9.0'
+    rxJava2Version = '2.1.4'
+    rxAndroid2Version = '2.0.1'
+    eventBusVersion = '3.0.0'
+    retrofit2Version = '2.2.0'
+    gsonVersion = '2.8.2'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+
+    compile "org.greenrobot:eventbus:${eventBusVersion}"
+    compile "io.reactivex.rxjava2:rxjava:${rxJava2Version}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxAndroid2Version}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofit2Version}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofit2Version}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofit2Version}"
+
+    testCompile 'junit:junit:4.12'
+}
