@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 15
@@ -16,22 +16,28 @@ android {
         unitTests.returnDefaultValues = true
     }
 
-
     buildTypes {
         debug {
+//            shrinkResources true
             minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+//            shrinkResources true
             minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    // Avoid that library set to release mode regardless of parent project mode
-    publishNonDefault true
+    flavorDimensions "mode"
+    productFlavors {
+        dev {
+            dimension "mode"
+        }
+        live {
+            dimension "mode"
+        }
+    }
 }
 
 ext {
