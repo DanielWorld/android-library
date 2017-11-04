@@ -11,7 +11,7 @@ public final class TestUtil {
     private TestUtil(){}
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    public static boolean testMethod(int i) {
+    static boolean testMethod(int i) {
         return i == 0;
     }
 }

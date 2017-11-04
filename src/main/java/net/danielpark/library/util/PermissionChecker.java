@@ -13,30 +13,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 /**
- * Check runtime permission using {@link EventBus}
+ * Check runtime permission
  * <p>
  *     Make sure to subscribe {@link PermissionState}
  * </p>
- * <pre>
- *     \@Subscribe(threadMode = ThreadMode.Main)
- *     public void onWhateverEvent(PermissionState state) {
- *         ...
- *     }
- *
- *     ...
- *
- *     public void onStart() {
- *         super.onStart();
- *         eventbus.register(this);
- *     }
- *
- *     ...
- *
- *     public void onStop() {
- *         eventbus.unregister(this);
- *         super.onStop();
- *     }
- * </pre>
  * <br><br>
  * Created by namgyu.park on 2017. 10. 26..
  */
@@ -57,7 +37,7 @@ public final class PermissionChecker {
 	private String[] permissions;
 
 	@NonNull
-	private EventBus eventBus;
+	private OnPermissionCheckerListener listener;
 
 	public enum PermissionState {
 		Granted, Denied, Farewell
@@ -78,8 +58,8 @@ public final class PermissionChecker {
 		return this;
 	}
 
-	public PermissionChecker withListeners(@NonNull EventBus eventBus) {
-		this.eventBus = eventBus;
+	public PermissionChecker withListeners(@NonNull OnPermissionCheckerListener listener) {
+		this.listener = listener;
 		return this;
 	}
 
@@ -87,7 +67,7 @@ public final class PermissionChecker {
 		if (activity == null && fragment == null) return;
 		if (permissions == null || permissions.length == 0)
 			throw new RuntimeException("Make sure to set permission to request");
-		if (eventBus == null)
+		if (listener == null)
 			throw new RuntimeException("EventBus cannot be null!");
 
 		if (Build.VERSION.SDK_INT >= 23) {
@@ -99,7 +79,7 @@ public final class PermissionChecker {
 			}
 
 			if (deniedPermissions.isEmpty())
-				eventBus.post(PermissionState.Granted);
+				listener.onPermissionCheckerResult(PermissionState.Granted);
 			else {
 				if (isActivity)
 					activity.requestPermissions(deniedPermissions.toArray(new String[deniedPermissions.size()]), REQUEST_RUNTIME_PERMISSION);
@@ -108,7 +88,7 @@ public final class PermissionChecker {
 			}
 		}
 		else {
-			eventBus.post(PermissionState.Granted);
+			listener.onPermissionCheckerResult(PermissionState.Granted);
 		}
 	}
 
@@ -137,8 +117,11 @@ public final class PermissionChecker {
 				}
 			}
 
-			eventBus.post(permissionState);
+			listener.onPermissionCheckerResult(permissionState);
 		}
 	}
 
+	public interface OnPermissionCheckerListener {
+		void onPermissionCheckerResult(@NonNull PermissionState permissionState);
+	}
 }
