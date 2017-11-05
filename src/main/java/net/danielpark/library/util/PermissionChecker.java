@@ -8,15 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
 /**
  * Check runtime permission
- * <p>
- *     Make sure to subscribe {@link PermissionState}
- * </p>
  * <br><br>
  * Created by namgyu.park on 2017. 10. 26..
  */
@@ -58,7 +54,7 @@ public final class PermissionChecker {
 		return this;
 	}
 
-	public PermissionChecker withListeners(@NonNull OnPermissionCheckerListener listener) {
+	public PermissionChecker withListener(@NonNull OnPermissionCheckerListener listener) {
 		this.listener = listener;
 		return this;
 	}
@@ -68,7 +64,7 @@ public final class PermissionChecker {
 		if (permissions == null || permissions.length == 0)
 			throw new RuntimeException("Make sure to set permission to request");
 		if (listener == null)
-			throw new RuntimeException("EventBus cannot be null!");
+			throw new RuntimeException("PermissionCheckerListener cannot be null!");
 
 		if (Build.VERSION.SDK_INT >= 23) {
 
