@@ -16,6 +16,6 @@ public final class AppUtil {
      * @return package name
      */
     public static String getAppPackageName(Context context) throws Exception {
-        return context.getApplicationContext().getPackageName();
+        return context.getPackageName();
     }
 }
