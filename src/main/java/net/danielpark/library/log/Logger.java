@@ -10,6 +10,16 @@ import net.danielpark.library.BuildConfig;
 
 public final class Logger {
 
+    private static Logger mInstance;
+
+    public static synchronized Logger getInstance() {
+        if (mInstance == null)
+            mInstance = new Logger();
+        return mInstance;
+    }
+
+    private Logger() {}
+
     private boolean mLogFlag = BuildConfig.DEBUG;
 
     /**
