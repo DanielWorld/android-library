@@ -14,10 +14,6 @@ public final class StringUtil {
      * @return <b>true</b> : if target String is null or empty or blank
      */
     public static boolean isNullorEmpty(String str){
-        try {
-            return (str == null || str.length() == 0 || str.trim().length() == 0 || str.trim().toLowerCase().equals("null"));
-        } catch (Exception e){
-            return true;
-        }
+        return (str == null || str.length() == 0 || str.trim().length() == 0 || str.trim().toLowerCase().equals("null"));
     }
 }

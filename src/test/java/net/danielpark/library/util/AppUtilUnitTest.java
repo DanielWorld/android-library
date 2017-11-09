@@ -2,6 +2,8 @@ package net.danielpark.library.util;
 
 import android.content.Context;
 
+import net.danielpark.library.log.Logger;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +19,6 @@ import static org.hamcrest.core.Is.is;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
 public class AppUtilUnitTest {
 
     private Context context;

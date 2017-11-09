@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
@@ -67,12 +68,7 @@ public final class PermissionChecker {
 			throw new RuntimeException("PermissionCheckerListener cannot be null!");
 
 		if (Build.VERSION.SDK_INT >= 23) {
-
-			final ArrayList<String> deniedPermissions = new ArrayList<>();
-			for (String permission : permissions) {
-				if (ContextCompat.checkSelfPermission(isActivity ? activity : fragment.getContext(), permission) != PackageManager.PERMISSION_GRANTED)
-					deniedPermissions.add(permission);
-			}
+			ArrayList<String> deniedPermissions = hasDeniedPermissions(permissions);
 
 			if (deniedPermissions.isEmpty())
 				listener.onPermissionCheckerResult(PermissionState.Granted);
@@ -115,6 +111,16 @@ public final class PermissionChecker {
 
 			listener.onPermissionCheckerResult(permissionState);
 		}
+	}
+
+	@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+	ArrayList<String> hasDeniedPermissions(String[] permissions) {
+		final ArrayList<String> deniedPermissions = new ArrayList<>();
+		for (String permission : permissions) {
+			if (ContextCompat.checkSelfPermission(isActivity ? activity : fragment.getContext(), permission) != PackageManager.PERMISSION_GRANTED)
+				deniedPermissions.add(permission);
+		}
+		return deniedPermissions;
 	}
 
 	public interface OnPermissionCheckerListener {

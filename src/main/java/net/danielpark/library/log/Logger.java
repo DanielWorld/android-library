@@ -1,5 +1,6 @@
 package net.danielpark.library.log;
 
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import net.danielpark.library.BuildConfig;
@@ -101,5 +102,10 @@ public final class Logger {
         if (mLogFlag) {
             Log.w(TAG, buildLogMsg(msg), throwable);
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    String vPrint(String TAG, String msg) {
+        return TAG + buildLogMsg(msg);
     }
 }
