@@ -16,6 +16,10 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
     lintOptions {
@@ -82,4 +86,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
     testCompile "org.robolectric:robolectric:${robolectricVersion}"
+    testCompile "org.robolectric:shadows-framework:${robolectricVersion}"
 }
