@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -66,11 +69,17 @@ public final class FileUtil {
     /**
      * 선택된 uri의 사진 Path를 가져온다.
      * uri 가 null 경우 마지막에 저장된 사진을 가져온다.
+     * <p>
+     *     Google photo app 의 경우 별도의 처리가 필요하다.
+     * </p>
      *
      * @param uri
      * @return
      */
-    public static File getImageFileFromGallery(ContentResolver resolver, Uri uri) {
+    @Nullable
+    public static File getImageFileFromGallery(Context context, Uri uri) {
+        ContentResolver resolver = context.getContentResolver();
+
         String[] projection = {MediaStore.Images.Media.DATA};
         if (uri == null) {
             uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -91,9 +100,39 @@ public final class FileUtil {
 
         mCursor.close();
 
-        if (StringUtil.isNullorEmpty(path))
-            return null;
+        if (StringUtil.isNullorEmpty(path)) {
+            if (uri.toString().startsWith("content://com.google.android.apps.photos.content")) {
+                return writeCloudImageToFile(context, uri, resolver);
+            }
+            else {
+                // Sorry. You gotta add another support app.
+                return null;
+            }
+
+        }
         return new File(path);
+    }
+
+    /**
+     * This is for google photo app.
+     * @param imageUri
+     * @return
+     */
+    @Nullable
+    private static File writeCloudImageToFile(Context context, @NonNull Uri imageUri, @NonNull ContentResolver contentResolver) {
+        try {
+            InputStream is = contentResolver.openInputStream(imageUri);
+            File outputFile = FileUtil.createImageFile(context);
+
+            if (copyToFile(is, outputFile)) {
+                return outputFile;
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
