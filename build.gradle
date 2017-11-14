@@ -21,8 +21,8 @@ repositories {
 publish {
     userOrg = 'danielworld'
     groupId = 'com.danielworld'
-    artifactId = 'common-utility-library'
-    publishVersion = '1.0.1'
+    artifactId = 'android-utility-library'
+    publishVersion = '1.0.5'
     desc = 'Contains useful Android utilities in library'
     website = 'https://github.com/DanielWorld/android-library'
     issueTracker = "${website}/issues"
@@ -36,8 +36,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.2"
+        versionCode 2
+        versionName "1.0.5"
         consumerProguardFiles 'proguard-rules.pro'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
