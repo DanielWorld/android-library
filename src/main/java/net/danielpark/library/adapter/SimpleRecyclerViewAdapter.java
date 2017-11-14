@@ -98,7 +98,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
                 }
                 while (it.hasNext()) {
 //				Log.v("OKAY", "Current i : " + i);
-                    if (it.next().getId() == mDataList.get(i).getId()) {
+                    if (mDataList.get(i).getUniqueId().equals(it.next().getUniqueId())) {
 //					Log.e("OKAY", "Remove : " + i);
                         it.remove();
                     }
@@ -220,7 +220,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
      */
     public int getDataPosition(T newData) {
         for (int index = 0; index < mDataList.size(); index++) {
-            if (newData.getId() == mDataList.get(index).getId()) {
+            if (mDataList.get(index).getUniqueId().equals(newData.getUniqueId())) {
                 return index;
             }
         }
@@ -242,9 +242,9 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
      * @throws Exception
      */
     public @Nullable
-    T getDataById(int id) throws Exception {
+    T getDataById(String id) throws Exception {
         for (int i = 0; i < mDataList.size(); i++) {
-            if (id == mDataList.get(i).getId()) {
+            if (mDataList.get(i).getUniqueId().equals(id)) {
                 return mDataList.get(i);
             }
         }
@@ -257,11 +257,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
      * @return
      * @throws Exception
      */
-    public int getId(int position) throws Exception {
-        return mDataList.get(position).getId();
+    public String getId(int position) throws Exception {
+        return mDataList.get(position).getUniqueId();
     }
-
-    public int getUserId(int position) throws Exception {
-		return mDataList.get(position).getUserId();
-	}
 }

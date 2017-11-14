@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
+import static net.danielpark.library.util.Preconditions.checkNotNull;
 
 /**
  * {@link android.support.v4.app.Fragment} 관련 유틸리티

@@ -308,11 +308,11 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
     }
 
     @Override
-    public int getId(int position) throws Exception {
+    public String getId(int position) throws Exception {
         if (useHeader())
-            return mDataList.get(position - getHeaderCount()).getId();
+            return mDataList.get(position - getHeaderCount()).getUniqueId();
         else
-            return mDataList.get(position).getId();
+            return mDataList.get(position).getUniqueId();
     }
 
 

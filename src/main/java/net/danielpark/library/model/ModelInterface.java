@@ -11,26 +11,10 @@ import android.support.annotation.Nullable;
 public interface ModelInterface {
 
 	/**
-	 * Unique id
+	 * Unique id in String (.. UUID)
+	 * <p>If unique id is Integer, then convert it to {@link String}</p>
 	 * @return
 	 */
-	int getId();
+	String getUniqueId();
 
-	/**
-	 * Unique user id
-	 * @return
-	 * @throws Exception
-	 */
-	int getUserId() throws Exception;
-
-	boolean hasImage();
-
-	@Nullable
-	String getImage();
-
-	boolean hasText();
-
-	String getText();
-
-	void setText(String text);
 }
