@@ -8,12 +8,15 @@ import android.content.Context;
 
 public final class AppUtil {
 
-    private AppUtil(){}
+    private AppUtil() {
+    }
 
     /**
      * Get application package name
      *
-     * @return package name
+     * @param context  {@link Context}
+     * @return  package name
+     * @throws Exception        throws exception
      */
     public static String getAppPackageName(Context context) throws Exception {
         return context.getPackageName();

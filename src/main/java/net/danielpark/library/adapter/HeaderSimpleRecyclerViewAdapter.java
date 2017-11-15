@@ -72,7 +72,7 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
 
     /**
      * Get item's count without Header, Footer count
-     * @return
+     * @return  data's item count except for header and footer
      */
     public int getBasicItemCount() {
         return mDataList.size();
@@ -172,9 +172,9 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
 
     /**
      * Add new data to current data at index in List. <br>
-     *     load next page. no checking duplicate data </p>
+     *    <p> load next page. no checking duplicate data </p>
      *
-     * @param newData       It should implement List<E>.
+     * @param newData       It should implement List.
      * @param newNextUrl    next url for data
      * @param index         position
      */
@@ -192,7 +192,7 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
     /**
      * Add one data
      *
-     * @param addData
+     * @param addData new data for adding
      */
     @Override
     public void addData(T addData) {
@@ -213,8 +213,8 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
     /**
      * Add one data at index
      *
-     * @param addData
-     * @param index
+     * @param addData new data for adding
+     * @param index position of data to add
      */
     @Override
     public void addData(T addData, int index) {
@@ -244,7 +244,7 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
     /**
      * Update one data
      *
-     * @param updateData simple object. not List<E>
+     * @param updateData simple object. not List
      */
     @Override
     public void updateOneData(T updateData) {
@@ -267,7 +267,7 @@ public abstract class HeaderSimpleRecyclerViewAdapter<T extends ModelInterface, 
     /**
      * Delete one data
      *
-     * @param deleteData
+     * @param deleteData data to delete
      */
     @Override
     public void deleteOneData(T deleteData) {

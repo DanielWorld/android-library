@@ -34,10 +34,12 @@ public final class KeyHash {
 
     /**
      * Get key hash like e.g) MoOnjObCBRe$nfa42kdoeMdie4=
-     * <br><br>
+     * <p>
      *     this method is only to see key hash. Don't use for real process
-     * @param context {@link Context}
-     * @return return "" if you failed to get key-hash
+     *     </p>
+     * @param context   android context
+     * @param hashType {@link HashType}
+     * @return          app key hash
      */
     public static String getAppKeyHash(Context context, HashType hashType) {
         PackageInfo packageInfo;

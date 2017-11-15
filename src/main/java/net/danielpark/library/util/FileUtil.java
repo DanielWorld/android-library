@@ -67,14 +67,12 @@ public final class FileUtil {
     }
 
     /**
-     * 선택된 uri의 사진 Path를 가져온다.
-     * uri 가 null 경우 마지막에 저장된 사진을 가져온다.
-     * <p>
-     *     Google photo app 의 경우 별도의 처리가 필요하다.
-     * </p>
-     *
-     * @param uri
-     * @return
+     * Get the uri's file path <br>
+     *     <p>If uri is null, then get the latest image's path </p>
+     *     <p>Google photo app has unique rule. so make sure to check. </p>
+     * @param context {@link Context}
+     * @param uri       image uri
+     * @return      target file
      */
     @Nullable
     public static File getImageFileFromGallery(Context context, Uri uri) {
@@ -115,8 +113,8 @@ public final class FileUtil {
 
     /**
      * This is for google photo app.
-     * @param imageUri
-     * @return
+     * @param imageUri  image uri
+     * @return copied new file
      */
     @Nullable
     private static File writeCloudImageToFile(Context context, @NonNull Uri imageUri, @NonNull ContentResolver contentResolver) {
@@ -140,7 +138,7 @@ public final class FileUtil {
      *
      * @param srcFile  : source file to copy
      * @param destFile : output file to be pasted.
-     * @return
+     * @return return <code>true</code> if it's copied successfully
      */
     public static boolean copyFile(File srcFile, File destFile) {
         if (srcFile == null || destFile == null)
@@ -148,11 +146,11 @@ public final class FileUtil {
 
         boolean result = false;
         try {
-            InputStream in = new FileInputStream(srcFile);
+            InputStream is = new FileInputStream(srcFile);
             try {
-                result = copyToFile(in, destFile);
+                result = copyToFile(is, destFile);
             } finally {
-                in.close();
+                is.close();
             }
         } catch (IOException e) {
             return false;
@@ -163,6 +161,10 @@ public final class FileUtil {
     /**
      * Copy data from a source stream to destFile.
      * Return true if succeed, return false if failed.
+     *
+     * @param inputStream       input stream
+     * @param destFile          temp file where to be pasted
+     * @return return <code>true</code> if it's copied successfully
      */
     private static boolean copyToFile(InputStream inputStream, File destFile) {
         try {

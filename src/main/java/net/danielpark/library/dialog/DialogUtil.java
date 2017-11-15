@@ -13,8 +13,9 @@ public final class DialogUtil {
 
     /**
      * Show custom {@link AlertDialog}
-     * @param context
-     * @param input
+     *
+     * @param context   android {@link Context}
+     * @param input     input which contains dialog info
      */
     public static void showDefaultDialog(Context context, DialogInput input) {
         if (context == null) return;

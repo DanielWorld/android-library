@@ -23,6 +23,9 @@ public final class FragmentUtil {
      * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
      * performed by the {@code fragmentManager}.
      *
+     * @param fragmentManager  {@link FragmentManager}
+     * @param fragment          {@link Fragment}
+     * @param frameId           view id for replacing
      */
     public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
                                               @NonNull Fragment fragment, @IdRes int frameId) {
@@ -36,9 +39,10 @@ public final class FragmentUtil {
     /**
      * The container view with id {@code frameId} is replaced by the {@code fragment}. The operation is
      * performed by the {@code fragmentManager}
-     * @param fragmentManager
-     * @param fragment
-     * @param frameId
+     *
+     * @param fragmentManager  {@link FragmentManager}
+     * @param fragment          {@link Fragment}
+     * @param frameId           view id for replacing
      */
     public static void replaceFragment(@NonNull FragmentManager fragmentManager,
                                        @NonNull Fragment fragment, @IdRes int frameId) {

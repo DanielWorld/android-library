@@ -3,16 +3,20 @@ apply plugin: 'com.novoda.bintray-release' // must be applied after your artifac
 
 buildscript {
     repositories {
+        mavenCentral();
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'com.novoda:bintray-release:0.7.0'
     }
 }
 
 repositories {
+    mavenCentral();
     jcenter()
+    google()
 }
 
 // http://sunghwanjo94.blogspot.kr/2015/07/jcenter.html
@@ -21,9 +25,9 @@ repositories {
 publish {
     userOrg = 'danielworld'
     groupId = 'com.danielworld'
-    artifactId = 'android-utility-library'
-    publishVersion = '1.0.5'
-    desc = 'Contains useful Android utilities in library'
+    artifactId = 'android-library'
+    publishVersion = '2.0.0'
+    desc = 'A collection of Android utilities and framework'
     website = 'https://github.com/DanielWorld/android-library'
     issueTracker = "${website}/issues"
     repository = "${website}.git"
@@ -36,20 +40,20 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.0.5"
+        versionCode 3
+        versionName "2.0.0"
         consumerProguardFiles 'proguard-rules.pro'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-//    testOptions {
-//        unitTests.returnDefaultValues = true
-//
-//        unitTests {
-//            includeAndroidResources = true
-//        }
-//    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 
     lintOptions {
         abortOnError false
@@ -68,15 +72,15 @@ android {
         }
     }
 
-    flavorDimensions "mode"
-    productFlavors {
-        dev {
-            dimension "mode"
-        }
-        main {
-            dimension "mode"
-        }
-    }
+//    flavorDimensions "mode"
+//    productFlavors {
+//        dev {
+//            dimension "mode"
+//        }
+//        main {
+//            dimension "mode"
+//        }
+//    }
 }
 
 ext {

@@ -30,6 +30,6 @@ public class AppUtilUnitTest {
 
     @Test
     public void getAppPackageName() throws Exception {
-        assertThat(AppUtil.getAppPackageName(context), is("org.robolectric.default"));
+        assertThat(AppUtil.getAppPackageName(context), is("net.danielpark.library"));
     }
 }

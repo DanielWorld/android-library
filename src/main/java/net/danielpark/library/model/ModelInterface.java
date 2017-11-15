@@ -10,11 +10,12 @@ import android.support.annotation.Nullable;
 
 public interface ModelInterface {
 
-	/**
-	 * Unique id in String (.. UUID)
-	 * <p>If unique id is Integer, then convert it to {@link String}</p>
-	 * @return
-	 */
-	String getUniqueId();
+    /**
+     * Unique id in String (.. UUID)
+     * <p>If unique id is Integer, then convert it to {@link String}</p>
+     *
+     * @return unique id
+     */
+    String getUniqueId();
 
 }

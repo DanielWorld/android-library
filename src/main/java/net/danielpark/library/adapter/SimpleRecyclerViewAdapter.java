@@ -30,8 +30,8 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
      * Get next url for next data. <br>
      *     If there is no url, then throw exception
      *
-     * @return
-     * @throws Exception
+     * @return  next url for new data
+     * @throws Exception    throws exception
      */
     public String getNextUrl() throws Exception {
         if (StringUtil.isNullorEmpty(mNextDataList))
@@ -56,8 +56,8 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Update all new data
      *
-     * @param newData
-     * @param newNextUrl
+     * @param newData       data to add
+     * @param newNextUrl    next url for new data
      */
     public void updateDataList(ArrayList<T> newData, String newNextUrl) {
         if (mDataList == null) mDataList = new ArrayList<>();
@@ -74,8 +74,8 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
      * add new data to current data. <br>
      *     load next data
      *
-     * @param newData    It should implement List<E>.
-     * @param newNextUrl
+     * @param newData    It should implement List.
+     * @param newNextUrl        next url for new data
      */
     public void addDataList(ArrayList<T> newData, String newNextUrl) {
         if (mDataList == null) return;
@@ -117,9 +117,9 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
 
     /**
      * Add new data to current data at index in List. <br>
-     *     load next page. no checking duplicate data </p>
+     *    <p> load next page. no checking duplicate data </p>
      *
-     * @param newData       It should implement List<E>.
+     * @param newData       It should implement List.
      * @param newNextUrl    next url for data
      * @param index         position
      */
@@ -136,7 +136,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Add one data
      *
-     * @param addData
+     * @param addData data to add
      */
     public void addData(T addData) {
         if (mDataList == null) return;
@@ -153,8 +153,8 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Add one data at index
      *
-     * @param addData
-     * @param index
+     * @param addData       data to add
+     * @param index         position where to add data
      */
     public void addData(T addData, int index) {
         if (mDataList == null) return;
@@ -177,7 +177,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Update one data
      *
-     * @param updateData simple object. not List<E>
+     * @param updateData simple object. not List
      */
     public void updateOneData(T updateData) {
         if (mDataList == null) return;
@@ -196,7 +196,7 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Delete one data
      *
-     * @param deleteData
+     * @param deleteData    data to delete
      */
     public void deleteOneData(T deleteData) {
         if (mDataList == null) return;
@@ -215,8 +215,8 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
     /**
      * Get index from {@link #mDataList}
      *
-     * @param newData   simple object, not List<E>
-     * @return
+     * @param newData   simple object, not List
+     * @return  data's position
      */
     public int getDataPosition(T newData) {
         for (int index = 0; index < mDataList.size(); index++) {
@@ -237,9 +237,9 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
 
     /**
      * Get data by 'id'
-     * @param id
-     * @return
-     * @throws Exception
+     * @param id        data's id
+     * @return          data which has 'id'
+     * @throws Exception    throws Exception
      */
     public @Nullable
     T getDataById(String id) throws Exception {
@@ -253,9 +253,9 @@ public abstract class SimpleRecyclerViewAdapter<T extends ModelInterface, VH ext
 
     /**
      * Get unique 'id' in data
-     * @param position
-     * @return
-     * @throws Exception
+     * @param position  data's position
+     * @return          data's id
+     * @throws Exception    throw exception
      */
     public String getId(int position) throws Exception {
         return mDataList.get(position).getUniqueId();
