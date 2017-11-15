@@ -17,7 +17,9 @@ import static net.danielpark.library.util.Preconditions.checkNotNull;
 
 public final class FragmentUtil {
 
-	private FragmentUtil(){}
+	private FragmentUtil(){
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * The {@code fragment} is added to the container view with id {@code frameId}. The operation is

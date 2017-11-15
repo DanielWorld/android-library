@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
+ * Manage to bitmap's sampling
+ * <br><br>
  * Created by namgyu.park on 2017. 11. 11..
  */
 
@@ -17,7 +19,7 @@ public final class BitmapSampling {
     private static final int DEFAULT_MAX_HEIGHT = 2048;
 
     private BitmapSampling() {
-
+        throw new UnsupportedOperationException();
     }
 
     public static Bitmap getBitmap(File file) {

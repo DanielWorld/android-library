@@ -16,7 +16,9 @@ import java.security.NoSuchAlgorithmException;
 
 public final class KeyHash {
 
-    private KeyHash(){}
+    private KeyHash(){
+        throw new UnsupportedOperationException();
+    }
 
     public enum HashType {
         SHA("SHA"), SHA256("SHA-256");

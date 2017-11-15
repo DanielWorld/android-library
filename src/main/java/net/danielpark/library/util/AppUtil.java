@@ -9,6 +9,7 @@ import android.content.Context;
 public final class AppUtil {
 
     private AppUtil() {
+        throw new UnsupportedOperationException();
     }
 
     /**

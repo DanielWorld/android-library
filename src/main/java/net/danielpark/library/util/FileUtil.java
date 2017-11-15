@@ -26,7 +26,7 @@ import java.util.Date;
 public final class FileUtil {
 
     private FileUtil() {
-
+        throw new UnsupportedOperationException();
     }
 
     public static String saveToFile(String filename, String contents) {
