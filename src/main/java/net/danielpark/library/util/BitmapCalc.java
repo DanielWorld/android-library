@@ -75,7 +75,7 @@ public final class BitmapCalc {
                         if (e.isDisposed()) return;
 
                         long taskDuration = System.currentTimeMillis();
-                        Logger.getInstance().d(TAG, Thread.currentThread() + " Start: " + DateUtil.getDate(taskDuration));
+                        Logger.d(TAG, Thread.currentThread() + " Start: " + DateUtil.getDate(taskDuration));
 //
                         Bitmap targetBitmap = queue.peek();
 //                        // TODO: Too much overhead, calculation should be other thread
@@ -126,9 +126,9 @@ public final class BitmapCalc {
                             }
                         });
 
-                        Logger.getInstance().v(TAG, Thread.currentThread() + " End: " + DateUtil.getDate());
-                        Logger.getInstance().i(TAG, Thread.currentThread() + " Duration: " + (System.currentTimeMillis() - taskDuration));
-                        Logger.getInstance().i(TAG, Thread.currentThread() + " reduced size: " + oriWidth + " / " + oriHeight);
+                        Logger.v(TAG, Thread.currentThread() + " End: " + DateUtil.getDate());
+                        Logger.i(TAG, Thread.currentThread() + " Duration: " + (System.currentTimeMillis() - taskDuration));
+                        Logger.i(TAG, Thread.currentThread() + " reduced size: " + oriWidth + " / " + oriHeight);
 
                         if (!e.isDisposed())
                             e.onSuccess(new Model(colorsList.subList(0, numbers)));

@@ -11,17 +11,9 @@ import net.danielpark.library.BuildConfig;
 
 public final class Logger {
 
-    private static Logger mInstance;
-
-    public static synchronized Logger getInstance() {
-        if (mInstance == null)
-            mInstance = new Logger();
-        return mInstance;
-    }
-
     private Logger() {}
 
-    private boolean mLogFlag = BuildConfig.DEBUG;
+    private static boolean mLogFlag = BuildConfig.DEBUG;
 
     /**
      * This is useful format for Logging. <br>
@@ -44,68 +36,68 @@ public final class Logger {
         return sb.toString();
     }
 
-    public void v(String TAG, String msg) {
+    public static void v(String TAG, String msg) {
         if (mLogFlag) {
             Log.v(TAG, buildLogMsg(msg));
         }
     }
 
-    public void d(String TAG, String msg) {
+    public static void d(String TAG, String msg) {
         if (mLogFlag) {
             Log.d(TAG, buildLogMsg(msg));
         }
     }
 
-    public void e(String TAG, String msg) {
+    public static void e(String TAG, String msg) {
         if (mLogFlag) {
             Log.e(TAG, buildLogMsg(msg));
         }
     }
 
-    public void i(String TAG, String msg) {
+    public static void i(String TAG, String msg) {
         if (mLogFlag) {
             Log.i(TAG, buildLogMsg(msg));
         }
     }
 
-    public void w(String TAG, String msg) {
+    public static void w(String TAG, String msg) {
         if (mLogFlag) {
             Log.w(TAG, buildLogMsg(msg));
         }
     }
 
-    public void v(String TAG, String msg, Throwable throwable) {
+    public static void v(String TAG, String msg, Throwable throwable) {
         if (mLogFlag) {
             Log.v(TAG, buildLogMsg(msg), throwable);
         }
     }
 
-    public void d(String TAG, String msg, Throwable throwable) {
+    public static void d(String TAG, String msg, Throwable throwable) {
         if (mLogFlag) {
             Log.d(TAG, buildLogMsg(msg), throwable);
         }
     }
 
-    public void e(String TAG, String msg, Throwable throwable) {
+    public static void e(String TAG, String msg, Throwable throwable) {
         if (mLogFlag) {
             Log.e(TAG, buildLogMsg(msg), throwable);
         }
     }
 
-    public void i(String TAG, String msg, Throwable throwable) {
+    public static void i(String TAG, String msg, Throwable throwable) {
         if (mLogFlag) {
             Log.i(TAG, buildLogMsg(msg), throwable);
         }
     }
 
-    public void w(String TAG, String msg, Throwable throwable) {
+    public static void w(String TAG, String msg, Throwable throwable) {
         if (mLogFlag) {
             Log.w(TAG, buildLogMsg(msg), throwable);
         }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    String vPrint(String TAG, String msg) {
+    static String vPrint(String TAG, String msg) {
         return TAG + buildLogMsg(msg);
     }
 }

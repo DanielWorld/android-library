@@ -12,17 +12,15 @@ import static org.hamcrest.core.Is.is;
 
 public class LoggerUnitTest {
 
-    Logger LOG;
 
     @Before
     public void setUp() throws Exception {
-        LOG = Logger.getInstance();
     }
 
     @Test
     public void printLog() throws Exception {
         assertThat(
-                LOG.vPrint("TAG", "message"),
+                Logger.vPrint("TAG", "message"),
                 is("TAG[[NativeMethodAccessorImpl.java>invoke0>#-2]] message")
         );
     }
