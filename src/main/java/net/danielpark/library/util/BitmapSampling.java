@@ -1,8 +1,9 @@
 package net.danielpark.library.util;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
+import android.support.annotation.DrawableRes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,6 +67,26 @@ public final class BitmapSampling {
         options.inJustDecodeBounds = false;
 
         return BitmapFactory.decodeByteArray(dataArray, 0, dataArray.length, options);
+    }
+
+    public static Bitmap getBitmap(Resources res, @DrawableRes int drawableRes, int reqWidth, int reqHeight) {
+        if (res == null)
+            throw new RuntimeException("Resources cannot be null!");
+
+        return getBitmap(res, drawableRes, reqWidth, reqHeight, null);
+    }
+
+    public static Bitmap getBitmap(Resources res, @DrawableRes int drawableRes, int reqWidth, int reqHeight, BitmapFactory.Options options) {
+
+        if (options == null)
+            options = new BitmapFactory.Options();
+
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, drawableRes, options);
+        options.inSampleSize = calculateSampleSize(options, reqWidth, reqHeight);
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeResource(res, drawableRes, options);
     }
 
     // ----------------------------
