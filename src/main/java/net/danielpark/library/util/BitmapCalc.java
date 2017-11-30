@@ -76,62 +76,37 @@ public final class BitmapCalc {
 
                         long taskDuration = System.currentTimeMillis();
                         Logger.d(TAG, Thread.currentThread() + " Start: " + DateUtil.getDate(taskDuration));
-//
+
                         Bitmap targetBitmap = queue.peek();
-//                        // TODO: Too much overhead, calculation should be other thread
+
+                        // TODO: Too much overhead, calculation should be other thread
                         int oriWidth = targetBitmap.getWidth();
                         int oriHeight = targetBitmap.getHeight();
 
                         Bitmap newB;
                         // Daniel (2017-11-15 16:59:53) : To reduce calculation duration, reduce bitmap size temporary.
-                        if (oriWidth >= 100 && oriHeight >= 100) {
-                            while (oriWidth >= 200 && oriHeight >= 200) {
-                                oriWidth /= 2;
-                                oriHeight /= 2;
-                            }
+                        if (oriWidth > 300 || oriHeight > 300) {
+                            int maxSize = Math.max(oriWidth, oriHeight);
+
+                            oriWidth = 300 * oriWidth / maxSize;
+                            oriHeight = 300 * oriHeight / maxSize;
+
                             newB = Bitmap.createScaledBitmap(targetBitmap, oriWidth, oriHeight, false);
                         }
                         else {
                             newB = targetBitmap.copy(targetBitmap.getConfig(), true);
                         }
 
-                        HashMap<Integer, Integer> colors = new HashMap<>();
-
-                        int width = newB.getWidth();
-                        int height = newB.getHeight();
-
-                        // TODO: Need to find better way... ㅜㅜ
-                        for (int h = 0; h < height; h++) {
-                            for (int w = 0; w < width; w++) {
-
-                                int pixel = newB.getPixel(w, h);
-                                if (colors.containsKey(pixel)) {
-                                    colors.put(pixel, colors.get(pixel) + 1);
-                                } else {
-                                    colors.put(pixel, 1);
-                                }
-                            }
-                        }
+                        List<int[]> result = MMCQ.compute(newB, numbers);
 
                         if (e.isDisposed()) return;
-
-                        ArrayList<Pair<Integer, Integer>> colorsList = new ArrayList<>();
-                        for (@ColorInt int color : colors.keySet()) {
-                            colorsList.add(new Pair<>(color, colors.get(color)));
-                        }
-                        Collections.sort(colorsList, new Comparator<Pair<Integer, Integer>>() {
-                            @Override
-                            public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2) {
-                                return o1.second > o2.second ? -1 : o1.second < o2.second ? 1 : 0;
-                            }
-                        });
 
                         Logger.v(TAG, Thread.currentThread() + " End: " + DateUtil.getDate());
                         Logger.i(TAG, Thread.currentThread() + " Duration: " + (System.currentTimeMillis() - taskDuration));
                         Logger.i(TAG, Thread.currentThread() + " reduced size: " + oriWidth + " / " + oriHeight);
 
                         if (!e.isDisposed())
-                            e.onSuccess(new Model(colorsList.subList(0, numbers)));
+                            e.onSuccess(new Model(result));
 
                         queue.poll();
                     }
@@ -156,9 +131,9 @@ public final class BitmapCalc {
     }
 
     public static class Model {
-        public final List<Pair<Integer, Integer>> colors;
+        public final List<int[]> colors;
 
-        public Model(List<Pair<Integer, Integer>> colors) {
+        public Model(List<int[]> colors) {
             this.colors = colors;
         }
     }
