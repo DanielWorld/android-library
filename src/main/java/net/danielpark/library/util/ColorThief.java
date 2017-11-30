@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MMCQ {
+public class ColorThief {
 
     private static final int SIGBITS = 5;
     private static final int RSHIFT = 8 - SIGBITS;
@@ -37,13 +37,13 @@ public class MMCQ {
     private static final int GREEN = 1;
     private static final int BLUE = 2;
 
-    public static List<int[]> compute(Bitmap image, int maxcolors) throws IOException {
+    public static List<int[]> compute(Bitmap image, int maxColors) throws IOException {
         List<int[]> pixels = getPixels(image);
-        return compute(pixels, maxcolors);
+        return compute(pixels, maxColors);
     }
 
-    public static List<int[]> compute(List<int[]> pixels, int maxcolors) {
-        ColorMap map = quantize(pixels, maxcolors);
+    private static List<int[]> compute(List<int[]> pixels, int maxColors) {
+        ColorMap map = quantize(pixels, maxColors);
         return map.palette();
     }
 
@@ -57,12 +57,19 @@ public class MMCQ {
                 t.add(image.getPixel(col, row));
             }
         }
-        for (int i = 0; i < t.size(); i += 10) {
+        for (int i = 0; i < t.size(); i += 1) {
             int[] rr = new int[3];
             int argb = t.get(i);
+
+//            rr[0] = Color.red(argb);
+//            rr[1] = Color.green(argb);
+//            rr[2] = Color.blue(argb);
+
+            // Same as above code. But for performance, change code.
             rr[0] = (argb >> 16) & 0xFF;
             rr[1] = (argb >> 8) & 0xFF;
             rr[2] = (argb) & 0xFF;
+
             if (!(rr[0] > 250 && rr[1] > 250 && rr[2] > 250)) {
                 res.add(rr);
             }

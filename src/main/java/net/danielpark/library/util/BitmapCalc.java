@@ -1,17 +1,11 @@
 package net.danielpark.library.util;
 
 import android.graphics.Bitmap;
-import android.support.annotation.ColorInt;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.util.Pair;
 
 import net.danielpark.library.log.Logger;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executor;
@@ -97,7 +91,7 @@ public final class BitmapCalc {
                             newB = targetBitmap.copy(targetBitmap.getConfig(), true);
                         }
 
-                        List<int[]> result = MMCQ.compute(newB, numbers);
+                        List<int[]> result = ColorThief.compute(newB, numbers);
 
                         if (e.isDisposed()) return;
 
