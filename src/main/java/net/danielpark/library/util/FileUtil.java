@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Date;
 
@@ -181,6 +183,25 @@ public final class FileUtil {
             return true;
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    public static String readFromAssets(Context context, String filename){
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(context.getAssets().open(filename)));
+
+            // do reading, usually loop until end of file reading
+//        ArrayList<String> data = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
+            String mLine = reader.readLine();
+            while (mLine != null) {
+                sb.append(mLine); // process line
+                mLine = reader.readLine();
+            }
+            reader.close();
+            return sb.toString();
+        } catch (IOException e) {
+            return "";
         }
     }
 }
