@@ -26,7 +26,7 @@ publish {
     userOrg = 'danielworld'
     groupId = 'com.danielworld'
     artifactId = 'android-library'
-    publishVersion = '2.0.0'
+    publishVersion = '2.0.1'
     desc = 'A collection of Android utilities and framework'
     website = 'https://github.com/DanielWorld/android-library'
     issueTracker = "${website}/issues"
@@ -41,7 +41,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 3
-        versionName "2.0.0"
+        versionName "2.0.1"
         consumerProguardFiles 'proguard-rules.pro'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
