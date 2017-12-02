@@ -15,6 +15,10 @@ public final class Logger {
 
     private static boolean mLogFlag = BuildConfig.DEBUG;
 
+    public static void setLogState(boolean isLogEnabled) {
+        mLogFlag = isLogEnabled;
+    }
+
     /**
      * This is useful format for Logging. <br>
      *     Represents that log's position in detail.
