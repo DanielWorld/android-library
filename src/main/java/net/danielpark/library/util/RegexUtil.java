@@ -19,7 +19,7 @@ public final class RegexUtil {
 
     public static boolean isValidFloatString(String floatString) {
         // Daniel (2017-12-15 16:24:39) : accept from 0.? to 1.0
-        String floatNumberRegex = "^(([0][.][0-9]+)|([1]([.][0]+|)))$";
+        String floatNumberRegex = "^(([0]([.][0-9]+|))|([1]([.][0]+|)))$";
         return Pattern.matches(floatNumberRegex, floatString);
     }
 }

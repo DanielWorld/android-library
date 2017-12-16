@@ -42,10 +42,15 @@ public class RegexUtilUnitTest {
         correctFloatString.add("1.0");
         correctFloatString.add("1.00");
         correctFloatString.add("1.000");
+        correctFloatString.add("0");
+        correctFloatString.add("1");
 
+        // Daniel (2017-12-16 23:27:19): 0000 is not right format.. sorry!
         incorrectFloatString.add("0000");
         incorrectFloatString.add("0000.0");
         incorrectFloatString.add("0000.1");
+        incorrectFloatString.add("0011.1");
+        incorrectFloatString.add("2231.1");
         incorrectFloatString.add("10019");
         incorrectFloatString.add("1.01");
         incorrectFloatString.add("1.");
