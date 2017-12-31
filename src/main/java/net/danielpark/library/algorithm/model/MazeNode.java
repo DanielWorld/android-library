@@ -28,6 +28,10 @@ public class MazeNode extends Node {
         this.calculateG();
     }
 
+    public boolean hasPreviousNode() {
+        return previousNode != null;
+    }
+
     public void setEndNode(MazeNode endNode) {
         this.calculateH(endNode);
     }
