@@ -62,7 +62,18 @@ public class MazeNode extends Node {
 
     private void calculateH(MazeNode endNode) {
         if (endNode != null) {
-            H = Math.abs(endNode.xIndex - xIndex) * width + Math.abs(endNode.yIndex - yIndex) * height;
+            int xIndexGap = Math.abs(endNode.xIndex - xIndex);
+            int yIndexGap = Math.abs(endNode.yIndex - yIndex);
+
+            // check it might be possible to have diagonal node.
+            int diagonalCount = 0;
+            while (xIndexGap > 0 && yIndexGap > 0) {
+                xIndexGap--;
+                yIndexGap--;
+                diagonalCount++;
+            }
+
+            H = diagonal * diagonalCount + xIndexGap * width + yIndexGap * height;
         }
     }
 

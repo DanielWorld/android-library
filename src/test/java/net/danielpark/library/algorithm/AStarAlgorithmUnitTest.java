@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -22,17 +24,33 @@ public class AStarAlgorithmUnitTest {
     private Pair<Integer, Integer> columns;
     private Pair<Integer, Integer> startNode;
     private Pair<Integer, Integer> endNode;
+    private ArrayList<Pair<Integer, Integer>> obstacles;
 
     private AStarAlgorithm aStarAlgorithm;
 
     @Before
     public void setUp() {
-        columns = new Pair<>(25, 25);
-        startNode = new Pair<>(0, 0);
-        endNode = new Pair<>(14, 20);
+        columns = new Pair<>(6, 8);
+        startNode = new Pair<>(1, 7);
+        endNode = new Pair<>(0, 1);
+        obstacles = new ArrayList<>();
+
+        obstacles.add(new Pair<>(4, 0));
+        obstacles.add(new Pair<>(1, 1));
+        obstacles.add(new Pair<>(1, 2));
+        obstacles.add(new Pair<>(2, 2));
+        obstacles.add(new Pair<>(4, 2));
+        obstacles.add(new Pair<>(4, 3));
+        obstacles.add(new Pair<>(0, 4));
+        obstacles.add(new Pair<>(1, 4));
+        obstacles.add(new Pair<>(2, 4));
+        obstacles.add(new Pair<>(3, 4));
+        obstacles.add(new Pair<>(4, 4));
+        obstacles.add(new Pair<>(2, 6));
+        obstacles.add(new Pair<>(3, 6));
 
         aStarAlgorithm = new AStarAlgorithm(
-                columns.first, columns.second, startNode, endNode);
+                columns.first, columns.second, startNode, endNode, obstacles);
     }
 
     @Test
@@ -53,8 +71,9 @@ public class AStarAlgorithmUnitTest {
         println("Start node G : " + aStarAlgorithm.getStartNode().getG());
         println("Start node H : " + aStarAlgorithm.getStartNode().getH());
         println("Start node F : " + aStarAlgorithm.getStartNode().getF());
+        println("");
 
-        assertThat(aStarAlgorithm.getNodeMap()[0].length, is(5));
+        assertThat(aStarAlgorithm.getNodeMap()[0].length, is(8));
     }
 
     @Test
@@ -73,23 +92,113 @@ public class AStarAlgorithmUnitTest {
     }
 
     @Test
-    public void build() {
+    public void buildTest1() {
+        columns = new Pair<>(6, 8);
+        startNode = new Pair<>(1, 7);
+        endNode = new Pair<>(0, 1);
+        obstacles = new ArrayList<>();
+
+        obstacles.add(new Pair<>(4, 0));
+        obstacles.add(new Pair<>(1, 1));
+        obstacles.add(new Pair<>(1, 2));
+        obstacles.add(new Pair<>(2, 2));
+        obstacles.add(new Pair<>(4, 2));
+        obstacles.add(new Pair<>(4, 3));
+        obstacles.add(new Pair<>(0, 4));
+        obstacles.add(new Pair<>(1, 4));
+        obstacles.add(new Pair<>(2, 4));
+        obstacles.add(new Pair<>(3, 4));
+        obstacles.add(new Pair<>(4, 4));
+        obstacles.add(new Pair<>(2, 6));
+        obstacles.add(new Pair<>(3, 6));
+
+        aStarAlgorithm = new AStarAlgorithm(
+                columns.first, columns.second, startNode, endNode, obstacles);
+
+        build();
+    }
+
+    @Test
+    public void buildTest2() {
+        columns = new Pair<>(5, 5);
+        startNode = new Pair<>(0, 0);
+        endNode = new Pair<>(4, 4);
+        obstacles = new ArrayList<>();
+
+        obstacles.add(new Pair<>(0, 3));
+        obstacles.add(new Pair<>(1, 3));
+        obstacles.add(new Pair<>(2, 3));
+        obstacles.add(new Pair<>(3, 3));
+        obstacles.add(new Pair<>(4, 3));
+
+        aStarAlgorithm = new AStarAlgorithm(
+                columns.first, columns.second, startNode, endNode, obstacles);
+
+        build();
+    }
+
+    @Test
+    public void buildTest3() {
+        columns = new Pair<>(6, 6);
+        startNode = new Pair<>(4, 0);
+        endNode = new Pair<>(2, 4);
+        obstacles = new ArrayList<>();
+
+        obstacles.add(new Pair<>(1, 1));
+        obstacles.add(new Pair<>(3, 1));
+        obstacles.add(new Pair<>(4, 1));
+        obstacles.add(new Pair<>(5, 1));
+        obstacles.add(new Pair<>(4, 2));
+        obstacles.add(new Pair<>(1, 3));
+        obstacles.add(new Pair<>(2, 3));
+        obstacles.add(new Pair<>(3, 3));
+        obstacles.add(new Pair<>(1, 4));
+
+        aStarAlgorithm = new AStarAlgorithm(
+                columns.first, columns.second, startNode, endNode, obstacles);
+
+        build();
+    }
+
+    private void build() {
         long startTime = System.currentTimeMillis();
 
         aStarAlgorithm.build();
 
+        long endTime = System.currentTimeMillis();
+        println("process build time : " + (endTime - startTime) + " ms");
+        println("");
+
         for (MazeNode mazeNode : aStarAlgorithm.closedList) {
-            println("final node : " + mazeNode.getxIndex()
+            println("checked node : " + mazeNode.getxIndex()
                     + "," + mazeNode.getyIndex());
 
-            println("final node G : " + mazeNode.getG());
-            println("final node H : " + mazeNode.getH());
-            println("final node F : " + mazeNode.getF());
+            println("checked node G : " + mazeNode.getG());
+            println("checked node H : " + mazeNode.getH());
+            println("checked node F : " + mazeNode.getF());
             println("");
         }
 
-        long endTime = System.currentTimeMillis();
-        println("process time : " + (endTime - startTime) + " ms");
+        MazeNode endNode = aStarAlgorithm.getEndNode();
+        while (endNode.hasPreviousNode()) {
+            println("final node : " + endNode.getxIndex()
+                    + "," + endNode.getyIndex());
+
+            println("final node G : " + endNode.getG());
+            println("final node H : " + endNode.getH());
+            println("final node F : " + endNode.getF());
+            println("");
+
+            endNode = endNode.getPreviousNode();
+        }
+
+        println("final node : " + endNode.getxIndex()
+                + "," + endNode.getyIndex());
+
+        println("final node G : " + endNode.getG());
+        println("final node H : " + endNode.getH());
+        println("final node F : " + endNode.getF());
+        println("");
     }
 
     private void println(String s) {

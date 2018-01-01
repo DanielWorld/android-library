@@ -4,6 +4,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
 import net.danielpark.library.algorithm.model.MazeNode;
+import net.danielpark.library.log.Logger;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  */
 
 public class AStarAlgorithm {
+    private final String TAG = AStarAlgorithm.class.getSimpleName();
 
     private MazeNode[][] nodeMap;
     private MazeNode startNode, endNode;
@@ -25,6 +27,10 @@ public class AStarAlgorithm {
 
     @VisibleForTesting()
     ArrayList<MazeNode> closedList = new ArrayList<>();
+
+    @VisibleForTesting
+    ArrayList<MazeNode> obstacleList = new ArrayList<>();
+
 
     public AStarAlgorithm(int rowCounts, int columnCounts,
                           Pair<Integer, Integer> startIndex,
@@ -59,6 +65,9 @@ public class AStarAlgorithm {
         if (obstacles != null) {
             for (Pair<Integer, Integer> data : obstacles) {
                 nodeMap[data.first][data.second].setObstacle(true);
+
+                // add obstacles to obstacleList.
+                obstacleList.add(nodeMap[data.first][data.second]);
             }
         }
     }
@@ -96,6 +105,7 @@ public class AStarAlgorithm {
                 f = openList.get(i).getF();
             }
             else if (openList.get(i).getF() == f) {
+                // TODO: when you check next node, compare H
                 if (openList.get(i).getH() < h) {
                     targetIndex = i;
                     h = openList.get(i).getH();
@@ -109,12 +119,20 @@ public class AStarAlgorithm {
             }
         }
 
+        // TODO: if openList's size == 0, no nodes found.
+        if (openList.isEmpty()) {
+            Logger.i(TAG, "No nodes found. Terminate!");
+            return;
+        }
+
         MazeNode targetNode = openList.get(targetIndex);
-        openList.clear();
+        openList.remove(targetIndex);
+//        openList.clear();
 
         if (targetNode.getxIndex() == endNode.getxIndex()
                 && targetNode.getyIndex() == endNode.getyIndex()) {
             closedList.add(targetNode);
+            Logger.d(TAG, "Get to End node!");
             return;
         }
 
@@ -149,7 +167,7 @@ public class AStarAlgorithm {
                 break;
             }
             else if (xDirection == 1) {
-                xDirection = 0;
+                xDirection = -1;
                 yDirection++;
             }
             else {
@@ -164,14 +182,29 @@ public class AStarAlgorithm {
 
         MazeNode node = nodeMap[x][y];
 
-        if (closedList.contains(node))
+        if (closedList.contains(node) || obstacleList.contains(node))
             return null;
 
-        node.setPreviousNode(preNode);
+        // TODO: before set previous node, you need to check which previous node is better.
+        if (node.hasPreviousNode()) {
+            MazeNode ppNode = node.getPreviousNode();
+            if (ppNode.getF() > preNode.getF()
+                    // TODO: when you check previous node, compare to G!
+//                    || (ppNode.getF() == preNode.getF() && ppNode.getH() > preNode.getH())) {
+                    || (ppNode.getF() == preNode.getF() && ppNode.getG() > preNode.getG())) {
+                node.setPreviousNode(preNode);
+            }
+        } else {
+            node.setPreviousNode(preNode);
+        }
         node.setEndNode(endNode);
 
+        // Add node to open list, if it's not the obstacle...
         if (!node.isObstacle()) {
-            // Add node to open list, if it's not the obstacle...
+            // If there was same node in open list, remove old one and add new one.
+            if (openList.contains(node)) {
+                openList.remove(node);
+            }
             openList.add(node);
         }
 
