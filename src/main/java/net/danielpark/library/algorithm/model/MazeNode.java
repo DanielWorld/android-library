@@ -8,8 +8,8 @@ public class MazeNode extends Node {
 
     private MazeNode previousNode;      // the node which the current node is directed to.
 
-    private double G = 0;               // the distance between start node and current node. (the cost so far)
-    private double H = 0;               // the distance between end node and current node. (heuristic)
+    private double G = 0;               // the cost from the start node to the current node. (the cost so far)
+    private double H = 0;               // estimated cost from current node to goal. (heuristic)
 
     private boolean isObstacle;         // is the obstacle?
     private final int diagonal;         // = root(width^2 + height^2)
