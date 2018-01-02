@@ -104,15 +104,9 @@ public class AStarAlgorithm {
                 h = openList.get(i).getH();
                 f = openList.get(i).getF();
             }
-            else if (openList.get(i).getF() == f) {
-                // TODO: when you check next node, compare H
-                if (openList.get(i).getH() < h) {
-                    targetIndex = i;
-                    h = openList.get(i).getH();
-                    f = openList.get(i).getF();
-                }
-            }
-            else if (openList.get(i).getF() < f) {
+            else if (openList.get(i).getF() < f
+                    // TODO: when you check next node, compare H
+                    || (openList.get(i).getF() == f && openList.get(i).getH() < h)) {
                 targetIndex = i;
                 h = openList.get(i).getH();
                 f = openList.get(i).getF();
