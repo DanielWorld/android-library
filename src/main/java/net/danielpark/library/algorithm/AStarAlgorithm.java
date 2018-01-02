@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Daniel Park on 2017. 12. 28..
  */
 
-public class AStarAlgorithm {
+public class AStarAlgorithm implements Algorithm {
     private final String TAG = AStarAlgorithm.class.getSimpleName();
 
     private MazeNode[][] nodeMap;
@@ -84,6 +84,7 @@ public class AStarAlgorithm {
         return endNode;
     }
 
+    @Override
     public void build() {
         if (currentNode == null)
             currentNode = startNode;

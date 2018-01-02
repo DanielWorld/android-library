@@ -8,8 +8,8 @@ public class MazeNode extends Node {
 
     private MazeNode previousNode;      // the node which the current node is directed to.
 
-    private double G = 0;               // the distance between start node and current node.
-    private double H = 0;               // the distance between end node and current node.
+    private double G = 0;               // the distance between start node and current node. (the cost so far)
+    private double H = 0;               // the distance between end node and current node. (heuristic)
 
     private boolean isObstacle;         // is the obstacle?
     private final int diagonal;         // = root(width^2 + height^2)
@@ -60,6 +60,13 @@ public class MazeNode extends Node {
         }
     }
 
+    /**
+     * Note that if you use a non informative heuristic function: h(v) = 0 for each v:
+     * you get that A* chooses which vertex to develop next according to the "so far cost" (g(v)) only,
+     * same as Dijkstra's algorithm -
+     * [so if h(v) = 0, A* defaults to Dijkstra's Algorithm.]
+     * @param endNode
+     */
     private void calculateH(MazeNode endNode) {
         if (endNode != null) {
             int xIndexGap = Math.abs(endNode.xIndex - xIndex);
