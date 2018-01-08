@@ -91,6 +91,32 @@ public class TextAlignAlgorithmUnitTest {
 
     }
 
+    @Test
+    public void buildTest() {
+        text = "인조는 남한산성에서 항전을 계속하지만 청나라가 너무 강했고, 이에 인조는 1637년 1월 30일 항복을 하게 됩니다.";
+        build(text);
+
+        text = "화성은 지구의 밖을 돌고 있는 첫 번째의 외행성이며 태양을 중심으로 4번째 궤도를 공전하는 태양계 행성입니다.";
+        build(text);
+
+        text = "트리케라톱스는 백악기 후기의 조반목 각룡아목의 초식 공룡이며, 몸길이는 6~9m이며 네 다리로 보행했습니다.";
+        build(text);
+    }
+
+    private void build(String text) {
+        long startTime = System.currentTimeMillis();
+        textAlignAlgorithm.setText(text);
+        textAlignAlgorithm.build();
+
+        for(String line : textAlignAlgorithm.stringAtLine) {
+            println(line);
+        }
+
+        println("");
+        println("Process time : " + (System.currentTimeMillis() - startTime) + " ms");
+        println("");
+    }
+
     private void calculate(String text) {
         long startTime = System.currentTimeMillis();
 

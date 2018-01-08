@@ -26,6 +26,8 @@ public class TextAlignAlgorithm implements Algorithm {
     @VisibleForTesting()
     final ArrayList<String> stringAtLine;
 
+    final SparseArray<LinkedList<Word>> wordData;
+
     public TextAlignAlgorithm() {
         this(15);
     }
@@ -34,6 +36,7 @@ public class TextAlignAlgorithm implements Algorithm {
         this.maxLengthAtLine = maxLengthAtLine;
         this.stringAtDot = new ArrayList<>();
         this.stringAtLine = new ArrayList<>();
+        this.wordData = new SparseArray<>();
     }
 
     public void setText(String text) {
@@ -51,11 +54,13 @@ public class TextAlignAlgorithm implements Algorithm {
         // Process
         // 1. Split by '.[\\s]' so gather info each sentence.
         // (So, you can guess words info in a sentence at least.)
-        createStringAtDot();
+//        createStringAtDot();
 
         // 2. Each sentence has words, and their information.
         // 2-1. try to distribute numbers within max length, and no limit lines
         // (But, distribute algorithm must keep the balance! remember!)
+        calculate(text);
+        generateText();
     }
 
     /**
@@ -84,13 +89,10 @@ public class TextAlignAlgorithm implements Algorithm {
         }
     }
 
-    SparseArray<LinkedList<Word>> wordData;
+
 
     @VisibleForTesting()
     void calculate(final String sentence) {
-        if (wordData == null)
-            wordData = new SparseArray<>();
-
         wordData.clear();
 
         String[] words = sentence.split("(\\s)");
@@ -193,5 +195,28 @@ public class TextAlignAlgorithm implements Algorithm {
 
         wordData.put(lastIndex, lastData);
         wordData.put(lastIndex - 1, prevData);
+    }
+
+    /**
+     * Generate parsed text data.
+     */
+    private void generateText() {
+        stringAtLine.clear();
+
+        int key = 0;
+
+        StringBuilder sb = new StringBuilder();
+
+        while (wordData.get(key) != null) {
+            for (Word w : wordData.get(key)) {
+                sb.append(w.getWord() + " ");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+
+            stringAtLine.add(sb.toString());
+
+            key++;
+            sb.delete(0, sb.length());
+        }
     }
 }
